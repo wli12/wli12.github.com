@@ -496,7 +496,7 @@ Chrome Store上插件的发布很简单，把自己的插件按要求打包好�
 最后再广告一下我的[便签插件][Notty]吧，感谢[靖哥哥][26]帮我做宣传图：
 <a href="https://chrome.google.com/webstore/detail/notty-notes/ggbmjahbkbhakkfgjiggdclpmmpmhajn?hl=zh-CN" title="Notty Notes" target="_blank"><img src="/images/backbonechrome/notes-logo.jpg" alt="Notty Notes"></a>
 
-[BeiYuu]:    http://beiyuu.com  "BeiYuu"
+[BeiYuu]:    http://wli12.github.io  "BeiYuu"
 [1]:    {{ page.url}}  ({{ page.title }})
 [2]:    http://backbonejs.org  "Backbone.js"
 [3]:    http://www.google.cn/intl/zh-CN/chrome/browser/  "Chrome Broswer"
@@ -515,7 +515,7 @@ Chrome Store上插件的发布很简单，把自己的插件按要求打包好�
 [16]:    http://daneden.me/animate/ "Animate.css"
 [17]:    https://github.com/jeromegn/Backbone.localStorage "Backbone.localStorage.js"
 [18]:    https://github.com/gbirke/Sanitize.js "Sanitize.js"
-[19]:    https://github.com/beiyuu/Notty-Notes
+[19]:    https://github.com/wli12/Notty-Notes
 [20]:    http://documentcloud.github.com/backbone/examples/todos/index.html "Backbone Todo"
 [21]:    http://www.the5fire.net/backbone-tutorials-catalogue.html "Backbone.js入门学习笔记目录"
 [22]:    http://www.cnblogs.com/nuysoft/archive/2012/03/19/2404274.html "Backbone 架构分析"

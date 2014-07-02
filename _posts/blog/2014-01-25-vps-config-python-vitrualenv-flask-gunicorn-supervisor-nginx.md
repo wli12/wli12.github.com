@@ -357,4 +357,4 @@ Nginx的配置文件和Supervisor类似，不同的程序可以分别配置，�
 [GU]: http://gunicorn.org/ "Gunicorn"
 [SV]: http://supervisord.org/ "Supervisor"
 [Nginx]: http://nginx.com/ "Nginx"
-[BeiYuu]:    http://beiyuu.com  "BeiYuu"
+[BeiYuu]:    http://wli12.github.io  "BeiYuu"

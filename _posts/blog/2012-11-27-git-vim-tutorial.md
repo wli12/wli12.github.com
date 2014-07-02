@@ -237,7 +237,7 @@ VIM在一开始会觉得非常不习惯，一定要坚持下去，收获的会�
 - [vimium][18]，用VIM的操作习惯来控制Chrome的插件
 
 
-[BeiYuu]:    http://beiyuu.com  "BeiYuu"
+[BeiYuu]:    http://wli12.github.io  "BeiYuu"
 [1]:    {{ page.url}}  ({{ page.title }})
 [2]:    https://github.com/gmarik/vundle
 [vim-cs]:  http://overapi.com/vim/
@@ -249,7 +249,7 @@ VIM在一开始会觉得非常不习惯，一定要坚持下去，收获的会�
 [6]:  https://github.com/gmarik
 [7]:  https://github.com/
 [8]:  https://pages.github.com/
-[9]:  http://beiyuu.com/github-pages/
+[9]:  http://wli12.github.io/github-pages/
 [10]:  http://mattn.github.com/zencoding-vim/
 [11]:  http://net.tutsplus.com/tutorials/other/vim-essential-plugin-easymotion/
 [12]:  http://scmbob.org/vim_fdm.html
@@ -259,5 +259,5 @@ VIM在一开始会觉得非常不习惯，一定要坚持下去，收获的会�
 [16]:  http://hi.baidu.com/whqvzhjoixbbdwd/item/11315a5073667d0de6c4a5e9
 [17]:  http://www.rayninfo.co.uk/vimtips.html
 [18]:  https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb
-[vimrc]: https://github.com/beiyuu/vimfiles/blob/master/_vimrc
+[vimrc]: https://github.com/wli12/vimfiles/blob/master/_vimrc
 [p-vim]: http://book.douban.com/subject/10599776/
