@@ -35,5 +35,23 @@
 </div>
 
 
+    <!--*********************************************************-->
+    <!--****** 宝贝儿，看见这个时候，删掉下面的统计代码哦~ ******-->
+    <!--************* 再推荐下我的第一篇博客哦~~ ****************-->
+    <!--*********************************************************-->
+
+    <script type="text/javascript">
+        $(function(){
+            $('.home-follow').click(function(e){
+                e.preventDefault();
+
+                if($('.home-contact').is(':visible')){
+                    $('.home-contact').slideUp(100);
+                }else{
+                    $('.home-contact').slideDown(100);
+                }
+            });
+        })
+    </script>
 </body>
 </html>

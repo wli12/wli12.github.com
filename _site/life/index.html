@@ -39,69 +39,6 @@
 
         <ul class="artical-list">
         
-            <li>
-                <h2>
-                    <a href="/douban-fm">豆瓣FM(iOS 3.0)使用体会</a>
-                </h2>
-                <div class="title-desc">豆瓣FM发布了全新设计的3.0版本，很多Feature不错</div>
-            </li>
-        
-            <li>
-                <h2>
-                    <a href="/jobs-interview">史蒂夫·乔布斯：遗失的访谈</a>
-                </h2>
-                <div class="title-desc">多年前乔布斯的一次访谈，最近才被重新找出来，可以仔细看看</div>
-            </li>
-        
-            <li>
-                <h2>
-                    <a href="/40-ama-55-grammy">40届全美音乐奖和55届格莱美颁奖演出观感</a>
-                </h2>
-                <div class="title-desc">这两个盛典，每年带给我很多快乐，忍不住点评，将长微博搬过来。</div>
-            </li>
-        
-            <li>
-                <h2>
-                    <a href="/build-facebook">只有好的棋手才会走运</a>
-                </h2>
-                <div class="title-desc">《打造Facebook》读后感</div>
-            </li>
-        
-            <li>
-                <h2>
-                    <a href="/bad-list-design">令人焦虑的列表设计</a>
-                </h2>
-                <div class="title-desc">列表是很基本的数据表现格式，但是依然有很多糟糕的设计。</div>
-            </li>
-        
-            <li>
-                <h2>
-                    <a href="/about-simplify">胡言乱语说简单</a>
-                </h2>
-                <div class="title-desc">胡言乱语而已，看看就好。</div>
-            </li>
-        
-            <li>
-                <h2>
-                    <a href="/auto-edit-bar">随内容滚动隐藏的工具栏</a>
-                </h2>
-                <div class="title-desc">又一个专属移动设备上的交互细节，有用有趣。</div>
-            </li>
-        
-            <li>
-                <h2>
-                    <a href="/side-slide">如果侧滑成为APP标配</a>
-                </h2>
-                <div class="title-desc">那么世界就又美好了一点点</div>
-            </li>
-        
-            <li>
-                <h2>
-                    <a href="/needs-video">谈谈刚需和360影视</a>
-                </h2>
-                <div class="title-desc">一个看起来很简单的需求，做起来真的有那么困难吗，到底是怎么回事？</div>
-            </li>
-        
         </ul>
     </div>
     <div class="aside">
@@ -154,5 +91,23 @@
 </script>
 
 
+    <!--*********************************************************-->
+    <!--****** 宝贝儿，看见这个时候，删掉下面的统计代码哦~ ******-->
+    <!--************* 再推荐下我的第一篇博客哦~~ ****************-->
+    <!--*********************************************************-->
+
+    <script type="text/javascript">
+        $(function(){
+            $('.home-follow').click(function(e){
+                e.preventDefault();
+
+                if($('.home-contact').is(':visible')){
+                    $('.home-contact').slideUp(100);
+                }else{
+                    $('.home-contact').slideDown(100);
+                }
+            });
+        })
+    </script>
 </body>
 </html>
