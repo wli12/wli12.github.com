@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 令人焦虑的列表设计
-category: opinion
+category: life
 description: 列表是很基本的数据表现格式，但是依然有很多糟糕的设计。
 ---
 

@@ -2,7 +2,7 @@
 layout: post
 title: 如果侧滑成为APP标配
 description: 那么世界就又美好了一点点
-category: opinion
+category: life
 ---
 
 前两天这样感叹过：

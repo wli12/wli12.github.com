@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 只有好的棋手才会走运
-category: opinion
+category: life
 description: 《打造Facebook》读后感
 ---
 

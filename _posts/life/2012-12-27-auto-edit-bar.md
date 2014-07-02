@@ -2,7 +2,7 @@
 layout: post
 title: 随内容滚动隐藏的工具栏
 description: 又一个专属移动设备上的交互细节，有用有趣。
-category: opinion
+category: life
 ---
 
 最先在[Google+][3]的APP上看到这种交互细节，而后在[美丽说][2]的新版上也看到了，上图：

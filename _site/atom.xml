@@ -4,49 +4,13 @@
    <title>WeiLi</title>
    <link href="http://wli12.github.io//atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://wli12.github.io/" rel="alternate" type="text/html" />
-   <updated>2014-07-03T01:39:51+08:00</updated>
+   <updated>2014-07-03T02:14:55+08:00</updated>
    <id>http://wli12.github.io/</id>
    <author>
      <name></name>
      <email></email>
    </author>
 
-   
-   <entry>
-     <title>Test</title>
-     <link href="http://wli12.github.io/test"/>
-     <updated>2014-07-03T00:00:00+08:00</updated>
-     <id>http://wli12.github.io/test</id>
-     <content type="html">&lt;p&gt;用&lt;a href=&quot;https://chrome.google.com/webstore/detail/tabby/pifnjkdglcfkfpdjdolfacpfdlgpdkhp&quot; title=&quot;Tabby&quot;&gt;Tabby&lt;/a&gt;有一阵子了，最近把细节完善，发布在了Chrome Store。&lt;/p&gt;
-
-&lt;p&gt;他的功能是，当你打开几十上百个Chrome标签，很占资源，不想加入书签，也不想存入Instapaper等Read It Later的东西，只看一次，但就是不想现在看，这时候只要在页面点击右键，选择“暂存到Tabby”即可。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://chrome.google.com/webstore/detail/tabby/pifnjkdglcfkfpdjdolfacpfdlgpdkhp&quot; title=&quot;Tabby&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;/images/other/Tabby-pro1.png&quot; alt=&quot;Tabby&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;你可以设置使用快捷键（默认关闭），要打开暂存的标签，只需点击Tabby的图标。因为使用了Chrome的书签，即使你卸载插件，还没来得及看的也不会丢失，也会默认同步到别的设备。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://chrome.google.com/webstore/detail/tabby/pifnjkdglcfkfpdjdolfacpfdlgpdkhp&quot; title=&quot;Tabby&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;/images/other/Tabby-pro2.png&quot; alt=&quot;Tabby&quot; &gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;推荐一本书&lt;a href=&quot;http://read.douban.com/ebook/709141/?referral_code=e6acsgl3&quot; title=&quot;我是个年轻人，我心情不太好&quot;&gt;我是个年轻人，我心情不太好&lt;/a&gt;，当时是他的简介让我动心了一下：&lt;/p&gt;
-
-&lt;blockquote&gt;&lt;p&gt;我25岁，读过一个硕士，但是退学了。我被时间、空间、意义这些事情烦扰着。我知道的东西多得难以置信。我知道名字，年份。数以百计。我知道谁第一个上的珠穆朗玛峰。我知道谁导演了那些美国最蹩脚的肥皂剧。我知道亚里士多德讲的话是啥意思。我知道时间在太阳上会走得慢一点……&lt;/p&gt;
-
-&lt;p&gt;但是，我知道这些有什么意义呢？&lt;/p&gt;
-
-&lt;p&gt;我的生活仍旧是一团糟。&lt;/p&gt;
-
-&lt;p&gt;不，连一团糟都不是，它是一片空白。&lt;/p&gt;
-
-&lt;p&gt;我没有女朋友，甚至没有很好很好的朋友。我有一个哥哥，还有一个比我小很多、还在上幼儿园的“伙伴”。可他们也不算是朋友。&lt;/p&gt;
-
-&lt;p&gt;要是我能有一种非常靠谱的感觉，觉得一切都会好起来，那该多好。&lt;/p&gt;&lt;/blockquote&gt;
-
-&lt;p&gt;不指望这本书能喂你多大一碗鸡汤，就是让你知道这个年纪的共同态，而且或许有解决办法。&lt;/p&gt;
-
-&lt;p&gt;好吧，去下载插件吧：
-&lt;a href=&quot;https://chrome.google.com/webstore/detail/tabby/pifnjkdglcfkfpdjdolfacpfdlgpdkhp&quot; title=&quot;Tabby&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;/images/other/Tabby-440.png&quot; alt=&quot;Tabby&quot; width=&quot;300&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-</content>
-   </entry>
    
    <entry>
      <title>Test</title>
@@ -1948,42 +1912,6 @@ grunt.loadNpmTasks(&#39;grunt-contrib-watch&#39;);
    </entry>
    
    <entry>
-     <title>Tabby</title>
-     <link href="http://wli12.github.io/tabby"/>
-     <updated>2013-04-12T00:00:00+08:00</updated>
-     <id>http://wli12.github.io/tabby</id>
-     <content type="html">&lt;p&gt;用&lt;a href=&quot;https://chrome.google.com/webstore/detail/tabby/pifnjkdglcfkfpdjdolfacpfdlgpdkhp&quot; title=&quot;Tabby&quot;&gt;Tabby&lt;/a&gt;有一阵子了，最近把细节完善，发布在了Chrome Store。&lt;/p&gt;
-
-&lt;p&gt;他的功能是，当你打开几十上百个Chrome标签，很占资源，不想加入书签，也不想存入Instapaper等Read It Later的东西，只看一次，但就是不想现在看，这时候只要在页面点击右键，选择“暂存到Tabby”即可。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://chrome.google.com/webstore/detail/tabby/pifnjkdglcfkfpdjdolfacpfdlgpdkhp&quot; title=&quot;Tabby&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;/images/other/Tabby-pro1.png&quot; alt=&quot;Tabby&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;你可以设置使用快捷键（默认关闭），要打开暂存的标签，只需点击Tabby的图标。因为使用了Chrome的书签，即使你卸载插件，还没来得及看的也不会丢失，也会默认同步到别的设备。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://chrome.google.com/webstore/detail/tabby/pifnjkdglcfkfpdjdolfacpfdlgpdkhp&quot; title=&quot;Tabby&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;/images/other/Tabby-pro2.png&quot; alt=&quot;Tabby&quot; &gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;推荐一本书&lt;a href=&quot;http://read.douban.com/ebook/709141/?referral_code=e6acsgl3&quot; title=&quot;我是个年轻人，我心情不太好&quot;&gt;我是个年轻人，我心情不太好&lt;/a&gt;，当时是他的简介让我动心了一下：&lt;/p&gt;
-
-&lt;blockquote&gt;&lt;p&gt;我25岁，读过一个硕士，但是退学了。我被时间、空间、意义这些事情烦扰着。我知道的东西多得难以置信。我知道名字，年份。数以百计。我知道谁第一个上的珠穆朗玛峰。我知道谁导演了那些美国最蹩脚的肥皂剧。我知道亚里士多德讲的话是啥意思。我知道时间在太阳上会走得慢一点……&lt;/p&gt;
-
-&lt;p&gt;但是，我知道这些有什么意义呢？&lt;/p&gt;
-
-&lt;p&gt;我的生活仍旧是一团糟。&lt;/p&gt;
-
-&lt;p&gt;不，连一团糟都不是，它是一片空白。&lt;/p&gt;
-
-&lt;p&gt;我没有女朋友，甚至没有很好很好的朋友。我有一个哥哥，还有一个比我小很多、还在上幼儿园的“伙伴”。可他们也不算是朋友。&lt;/p&gt;
-
-&lt;p&gt;要是我能有一种非常靠谱的感觉，觉得一切都会好起来，那该多好。&lt;/p&gt;&lt;/blockquote&gt;
-
-&lt;p&gt;不指望这本书能喂你多大一碗鸡汤，就是让你知道这个年纪的共同态，而且或许有解决办法。&lt;/p&gt;
-
-&lt;p&gt;好吧，去下载插件吧：
-&lt;a href=&quot;https://chrome.google.com/webstore/detail/tabby/pifnjkdglcfkfpdjdolfacpfdlgpdkhp&quot; title=&quot;Tabby&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;/images/other/Tabby-440.png&quot; alt=&quot;Tabby&quot; width=&quot;300&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-</content>
-   </entry>
-   
-   <entry>
      <title>编写可读代码的艺术</title>
      <link href="http://wli12.github.io/readable-code"/>
      <updated>2013-03-21T00:00:00+08:00</updated>
@@ -3472,6 +3400,106 @@ if ($document) {
 &lt;ul&gt;
 &lt;li&gt;英文版：&lt;a href=&quot;http://book.douban.com/subject/5442971/&quot; title=&quot;The Art Of Readable Code&quot;&gt;《The Art of Readable Code》&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;中文版：&lt;a href=&quot;http://book.douban.com/subject/10797189/&quot; title=&quot;编写可读代码的艺术&quot;&gt;编写可读代码的艺术&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+   </entry>
+   
+   <entry>
+     <title>40届全美音乐奖和55届格莱美颁奖演出观感</title>
+     <link href="http://wli12.github.io/40-ama-55-grammy"/>
+     <updated>2013-02-19T00:00:00+08:00</updated>
+     <id>http://wli12.github.io/40-ama-55-grammy</id>
+     <content type="html">&lt;h2&gt;40届全美音乐奖(Ameican Musican Awards)&lt;/h2&gt;
+
+&lt;p&gt;1、少了英伦小清新的全美音乐奖，总体来说还是俗气了些；&lt;/p&gt;
+
+&lt;p&gt;2、Justin Bieber的gay气太重了，歌我还是喜欢呀，准备练习一首，哈哈；&lt;/p&gt;
+
+&lt;p&gt;3、Pink真是用生命在唱歌，并且是杂技团出身，脑补前年格莱美颁奖；&lt;/p&gt;
+
+&lt;p&gt;4、我依然没有抓住Taylor Swift的点，女艺人里面喜欢的有很多，Katy Perry，Carrie Underwood、Nelly Furtado、Rihanna甚至Kelly Clarkson、Lady Gaga、Adele，但是依然不懂Taylor Swift凭什么呢？&lt;/p&gt;
+
+&lt;p&gt;5、Carrie Underwood这样才是唱乡村的啊，斯威夫特姐姐，也终于想起来吴怡霈为什么看起来亲切眼熟了；&lt;/p&gt;
+
+&lt;p&gt;6、第一次加入了电子乐，恩，电子乐牛逼，史旺达也牛逼；&lt;/p&gt;
+
+&lt;p&gt;7、Nicki Minaj真是太有才太可爱啦；&lt;/p&gt;
+
+&lt;p&gt;8、鸟叔果然是最棒的，Hi爆全场，期待格莱美上的演出；&lt;/p&gt;
+
+&lt;p&gt;9、Galaxy Note II强势插入的广告，脑补两年前格莱美的iPad广告；&lt;/p&gt;
+
+&lt;div style=&quot;text-align:center;margin-bottom:50px;&quot;&gt;
+&lt;embed src=&quot;http://player.youku.com/player.php/sid/XNDc3MTQzMjg0/v.swf&quot; quality=&quot;high&quot; width=&quot;480&quot; height=&quot;400&quot; align=&quot;middle&quot; allowScriptAccess=&quot;sameDomain&quot; allowFullscreen=&quot;true&quot; type=&quot;application/x-shockwave-flash&quot;&gt;&lt;/embed&gt;
+&lt;/div&gt;
+
+
+&lt;h2&gt;55届格莱美(Grammy)颁奖&lt;/h2&gt;
+
+&lt;p&gt;1、今年的格莱美，老将大都歇菜了，对新人感情积累不够，没法High起来，平淡的Happy一下吧；&lt;/p&gt;
+
+&lt;p&gt;2、制作、演出水平还是一如既往的高，不用多说；&lt;/p&gt;
+
+&lt;p&gt;3、Taylor Swift第一个出场，突然解了我一个疑惑，原来美国恐怖故事里那个神经质的年轻修女，长的是像她啊！&lt;/p&gt;
+
+&lt;p&gt;4、Fun. 今年收获颇丰，歌很好听，耕耘这么多年，总算出头了，演出中下雨这舞台设计也还蛮意外的；&lt;/p&gt;
+
+&lt;p&gt;5、查了资料原来Justin Timberlake从超级男孩就开始了，贾老板人气如此之高，大约还是演电影的因素，他的歌除了4年前和T.I.的合唱听起来比较动听，今年我是没感受到，胡子倒是刮得真干净真嫩；&lt;/p&gt;
+
+&lt;p&gt;6、像Maroon 5的这些新歌，我觉得自己时常难以跟上时代的步伐，接受这些都是从我们这城乡结合部的发廊、呼啸而过的摩托、人群中刺耳的手机铃声来的，好奇他们如何发现的？&lt;/p&gt;
+
+&lt;p&gt;7、Rihanna今年一甩骚情女的姿态，玩起了动情，stay这首确实挺打动人，一时间想起来很多；&lt;/p&gt;
+
+&lt;p&gt;8、整场演出最High的部分就是Bruno Mars和Sting了，去年听了很多Reggae，看的最棒的现场也是Reggae，有很美好的回忆也烙上了Reggae，这让人感到快乐的音乐，任何时候都无法拒绝，真心感谢Bob Marley，感谢Marley家族带给世界这样美好的东西；&lt;/p&gt;
+
+&lt;p&gt;9、Jack White以前没听过，Rock的范很足，要吐槽的是他手里那把烂Fender，质感比大G差太多，无怪乎演出结束要砸掉；&lt;/p&gt;
+
+&lt;p&gt;10、Carrie Underwood这次就高端大气上档次了，没有Oklahoma的丁点气息了，当然，一如既往的喜欢这个姑娘，比Taylor好太多了；&lt;/p&gt;
+
+&lt;p&gt;11、今年的“群口相声”改成LL Cool J了，没啥想说的；&lt;/p&gt;
+
+&lt;p&gt;12、数数颁奖嘉宾，老爸老妈的Barney很搞；大爆炸的Penny倒是常来，可是姐姐你能不能有点专业精神，一层一层的下巴，减减肥好吗？2B Girls的Max，致辞毫无亮点，透露出胸大无脑的本性；Johnny Depp，嗯，吊；最碉堡还是Prince，看得出欧美音乐圈相当尊重前辈，我还有张他的打口碟，只是当时的水平无力欣赏，那些影响音乐人的音乐大师，总要一定积累去体会；&lt;/p&gt;
+
+&lt;p&gt;13、一直疑惑的一点是，为什么唱歌好的男艺人大多都是小个子，从Bon Jovi到Alex Rose，从Bruno Mars到Fun.，数不胜数，为什么？&lt;/p&gt;
+
+&lt;p&gt;14、每每看到艺人拿奖，他们也没煽什么情，我却总是替他们激动到不行，实在比国内的节目高级多了，哎；&lt;/p&gt;
+
+&lt;p&gt;15、说起来格莱美这两年都比较low，你说没有Coldplay没有Usher没有Katy Perry没有Lady Gaga没有Justin Bieber没有Black Eyed Peas没有Eminem，连鸟叔都没有，你还让我怎么看，期待明年会更好吧！&lt;/p&gt;
+
+&lt;div style=&quot;text-align:center&quot;&gt;
+&lt;embed src=&quot;http://player.youku.com/player.php/sid/XNTEzNzI1Njcy/v.swf&quot; quality=&quot;high&quot; width=&quot;480&quot; height=&quot;400&quot; align=&quot;middle&quot; allowScriptAccess=&quot;sameDomain&quot; allowFullscreen=&quot;true&quot; type=&quot;application/x-shockwave-flash&quot;&gt;&lt;/embed&gt;
+&lt;/div&gt;
+
+
+
+</content>
+   </entry>
+   
+   <entry>
+     <title>只有好的棋手才会走运</title>
+     <link href="http://wli12.github.io/build-facebook"/>
+     <updated>2013-01-21T00:00:00+08:00</updated>
+     <id>http://wli12.github.io/build-facebook</id>
+     <content type="html">&lt;p&gt;能和Facebook这样的公司一起成长太幸福，对作者真是羡慕嫉妒恨。&lt;/p&gt;
+
+&lt;p&gt;Facebook快速并且顺利的成长，作者初期选择他，悬念并不大，不过在第一章谈到对公司的忠诚度倒是个不错的话题，树倒猢狲散、墙倒众人推，这就是现实，更何况赤裸裸的签订的打工合同，每个人都会做对自己最有利的选择，同样的，公司招聘也不是做慈善，所以忠诚在这里的定义是，在职期间尽心尽力做到自己该做的事情。&lt;/p&gt;
+
+&lt;p&gt;对于初创互联网公司来说，招聘是重中之重，任何苛刻都不为过，臭味相投的一流人才的内部推荐，是作者首推的方法。最早听到Facebook的“Fire Fast”原则有些惊讶，招聘成本如此之高，还有这样严厉的作为，足见对人的重视。&lt;/p&gt;
+
+&lt;p&gt;盛行工程师文化，并且对应聘者非常挑剔的公司，经理这个职位有时候会显得力量薄弱，所以书中讲团队管理章节的部分就比较没有新意，产品流程业界合格的公司大抵都如此罢。值得注意的一点就是Facebook的快，将迭代这个概念完好的贯彻执行，在Web时代，不完美不重要，错一点也不重要，慢了就很要命。当然，这需要高水平的“黑客”。&lt;/p&gt;
+
+&lt;p&gt;其实整本书趋于平淡，尤其身处行业内、并且经常捕风捉影关注此类信息，不过，我不在其中亲身感受，很多观感自然也是架空的，也无法完整体会Facebook的优秀之处。&lt;/p&gt;
+
+&lt;p&gt;最后一章，作者的投资理念很务实很合理，不过，窃以为这在互联网行业应该也是标配吧。&lt;/p&gt;
+
+&lt;p&gt;当然，祝作者报效祖国成功！&lt;/p&gt;
+
+&lt;p&gt;多废话一句：在我看来，豆瓣和Facebook有许多的相似之处，或许这只是我一厢情愿吧，哈哈。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;豆瓣链接：&lt;a href=&quot;http://book.douban.com/subject/20471120/&quot; title=&quot;打造Facebook&quot;&gt;《打造Facebook》&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;在线阅读：&lt;a href=&quot;http://read.douban.com/ebook/500486/?referral_code=myg7ot50&quot;&gt;《打造Facebook》&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 </content>
