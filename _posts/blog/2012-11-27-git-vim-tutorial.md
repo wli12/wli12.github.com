@@ -237,7 +237,7 @@ VIM在一开始会觉得非常不习惯，一定要坚持下去，收获的会�
 - [vimium][18]，用VIM的操作习惯来控制Chrome的插件
 
 
-[BeiYuu]:    http://wli12.github.io  "BeiYuu"
+[WeiLi]:    http://wli12.github.io  "WeiLi"
 [1]:    {{ page.url}}  ({{ page.title }})
 [2]:    https://github.com/gmarik/vundle
 [vim-cs]:  http://overapi.com/vim/

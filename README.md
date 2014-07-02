@@ -1,6 +1,6 @@
 #一点点说明
 
-这是[BeiYuu.com](http://wli12.github.io)的源码，如果你看了[使用Github Pages建独立博客](http://wli12.github.io/github-pages/)，希望看下去哦：
+这是[wli12.github.io](http://wli12.github.io)的源码，如果你看了[使用Github Pages建独立博客](http://wli12.github.io/github-pages/)，希望看下去哦：
 
 * 马上动手，很赞
 * 感谢认可

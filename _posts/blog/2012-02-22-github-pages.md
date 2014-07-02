@@ -30,7 +30,7 @@ Github Pages有以下几个优点：
 
 域名的购买不用多讲，注册、选域名、支付，有网购经验的都毫无压力，优惠码也遍地皆是。域名的配置需要提醒一下，因为伟大英明的GFW的存在，我们必须多做些事情。
 
-流传Godaddy的域名解析服务器被墙掉，导致域名无法访问，后来这个事情在[BeiYuu][]也发生了，不得已需要把域名解析服务迁移到国内比较稳定的服务商处，这个迁移对于域名来说没有什么风险，最终的控制权还是在Godaddy那里，你随时都可以改回去。
+流传Godaddy的域名解析服务器被墙掉，导致域名无法访问，后来这个事情在[WeiLi][]也发生了，不得已需要把域名解析服务迁移到国内比较稳定的服务商处，这个迁移对于域名来说没有什么风险，最终的控制权还是在Godaddy那里，你随时都可以改回去。
 
 我们选择[DNSPod][]的服务，他们的产品做得不错，易用、免费，收费版有更高端的功能，暂不需要。注册登录之后，按照DNSPod的说法，只需三步（我们插入一步）：
 
@@ -233,7 +233,7 @@ Jekyll的配置写在_config.yml文件中，可配置项有很多，我们不去
 
 * `permalink: /:title` /github-pages
 
-自定义项的内容，例如我们定义了`title:BeiYuu的博客`这样一项，那么你就可以在文章中使用`{ { site.title }}`来引用这个变量了，非常方便定义些全局变量。
+自定义项的内容，例如我们定义了`title:WeiLi的博客`这样一项，那么你就可以在文章中使用`{ { site.title }}`来引用这个变量了，非常方便定义些全局变量。
 
 ###YAML Front Matter和模板变量
 对于使用YAML定义格式的文章，Jekyll会特别对待，他的格式要求比较严格，必须是这样的形式：
@@ -333,7 +333,7 @@ Google的高亮插件使用也比较方便，只需要在`<pre>`的标签上加�
 如果你跟着这篇不那么详尽的教程，成功搭建了自己的博客，恭喜你！剩下的就是保持热情的去写自己的文章吧。
 
 
-[BeiYuu]:    http://wli12.github.io  "BeiYuu"
+[WeiLi]:    http://wli12.github.io  "WeiLi"
 [Github]:   http://github.com "Github"
 [jQuery]:   https://github.com/jquery/jquery "jQuery@github"
 [Twitter]:  https://github.com/twitter/bootstrap "Twitter@github"
