@@ -84,13 +84,13 @@ pre ol{margin-left:25px;list-style-type:decimal;}
     background-position:50% 50%;
 }
 .blog .aside{
-    background-image:url('http://image16-c.poco.cn/mypoco/myphoto/20140702/22/1749888632014070222064401.jpg');
+    background-image:url(http://image16-c.poco.cn/mypoco/myphoto/20140702/22/1749888632014070222064401.jpg);
 }
 .opinion .aside{
-    background-image:url('http://image16-c.poco.cn/mypoco/myphoto/20140702/23/17498886320140702234155074.jpg');
+    background-image:url(http://image16-c.poco.cn/mypoco/myphoto/20140702/23/17498886320140702234155074.jpg);
 }
 .project .aside{
-    background-image:url('http://image16-c.poco.cn/mypoco/myphoto/20140702/23/17498886320140702233820030.jpg');
+    background-image:url(http://image16-c.poco.cn/mypoco/myphoto/20140702/23/17498886320140702233820030.jpg);
 }
 .index-content .section { margin-left:30%; padding-top:80px; padding-right:15%; ;}
 
