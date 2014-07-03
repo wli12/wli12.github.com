@@ -4,61 +4,13 @@
    <title>WeiLi</title>
    <link href="http://wli12.github.io//atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://wli12.github.io/" rel="alternate" type="text/html" />
-   <updated>2014-07-03T10:14:14+08:00</updated>
+   <updated>2014-07-03T10:30:55+08:00</updated>
    <id>http://wli12.github.io/</id>
    <author>
      <name></name>
      <email></email>
    </author>
 
-   
-   <entry>
-     <title>十分钟了解分布式计算:GraphLab</title>
-     <link href="http://wli12.github.io/spark%20copy"/>
-     <updated>2014-06-13T00:00:00+08:00</updated>
-     <id>http://wli12.github.io/spark copy</id>
-     <content type="html">&lt;h4&gt;GraphLab原型论文&lt;/h4&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://graphlab.org/projects/index.html&quot;&gt;GraphLab&lt;/a&gt;是CMU在2009年开始的一个项目，这里的内容是基于论文&lt;/p&gt;
-
-&lt;p&gt;Low, Yucheng, et al. &quot;&lt;a href=&quot;https://www.select.cs.cmu.edu/publications/paperdir/vldb2012-low-gonzalez-kyrola-bickson-guestrin-hellerstein.pdf&quot;&gt;Distributed GraphLab: A Framework for Machine Learning in the Cloud&lt;/a&gt;&quot; Proceedings of the VLDB Endowment 5.8 (2012)[&lt;a href=&quot;http://www.cs.cmu.edu/~ylow/vldb5.pptx&quot;&gt;ppt&lt;/a&gt;]&lt;/p&gt;
-
-&lt;p&gt;后续会加入GraphLab PowerGraph (v. 2.2)的内容&lt;/p&gt;
-
-&lt;h5&gt;Graph计算的背景&lt;/h5&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131821276391915.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Graph可以刻画的范围是很广的，用户和商品之间的关系是一个典型的二部图，pagerank的random walk也是一张图&lt;/li&gt;
-&lt;li&gt;Graph database(Neo4j，Titan，flockdb)是用于图数据的存储检索，而涉及到复杂的Graph Processing，就适合用graphlab做。&lt;/li&gt;
-&lt;/ol&gt;
-
-
-&lt;h5&gt;Graph计算的特点&lt;/h5&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131820593896278.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;Dependency Graph&lt;/strong&gt;：MapReduce对于大的data并行任务（Feature Extraction/Cross Validation）是适用的，但data并行系统很难刻画data之间的依赖关系，而这一点在机器学习（Gibbs Sampling，变分法，PageRank，CoEM，Collaborative Filtering等）中非常重要。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Local Updates&lt;/strong&gt;：在Graph并行系统中，一个结点的值只受相邻结点的影响，因此可以根据局部值就可以做更新。而在data并行系统中是没有Local Updates的概念的，local信息可以加快计算，不同local之间可以做并行。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Iterative Computation&lt;/strong&gt;：和普通Map-reduce任务不同，图计算天然涉及到迭代计算。更新结点a的时候，对其所有邻居(包括邻居结点b)map，再reduce所有邻居的结果，用得到的值来update结点a的值。然后就可以用结点a的最新值去更新他的结点b了。&lt;/li&gt;
-&lt;/ol&gt;
-
-
-&lt;h5&gt;GraphLab框架&lt;/h5&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131819389052666.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;Graph Based Data Representation&lt;/strong&gt;：GraphLab将图切成若干子图分布式存储，其中ghost vertex是子图之间的边界点，其上存储了邻接结构以及remote数据的副本，子图之间也是有通信的，因此disk数据共享做备份很困难。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Update Functions&lt;/strong&gt;：采用的是Asynchronously Dynamic Update，这种动态计算的主要思想是根据vertex的priority更新，每台机器上都有一个优先队列，每次迭代中如果当前vertex变化量不大的话就不再将该点的scope（一步可达的点）入队了，ghost顶点不需要入队。改进空间：可以用排队论优化。&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131822446557184.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Data consistency&lt;/strong&gt;：需要保证Race-Free Code，如果计算overlap发生抢跑，就会产生一致性问题。GraphLab在data consistency这方面是最灵活的框架。Edge consistency的思想是one vertex apart的Update Functions才可以并行，而Overlapping regions是只读的。&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131826000305796.png&quot; alt=&quot;&quot; /&gt;此外还可以定制Full consistency(Stronger)和Vertex consistency(Weaker)这两种一致性级别。&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131828007957736.png&quot; alt=&quot;&quot; /&gt;Distributed Consistency问题有两种解决办法 1)图着色(算法复杂，并且可能有些颜色的patirion比较小影响效率) 2)Distributed Locking with pipelining(高效，Latency Hiding)&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131832037495912.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Fault tolerance&lt;/strong&gt;：GraphLab在这方面做的还不是很好，主要是Chandy-Lamport的asynchronous snapshotting algorithm。&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131833057177480.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-</content>
-   </entry>
    
    <entry>
      <title>十分钟了解分布式计算:Spark</title>
