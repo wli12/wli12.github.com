@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+    * Author:         WeiLi
+    -->
+    <meta charset="utf-8" />
+    <title>十分钟了解分布式计算:Petuum | WeiLi</title>
+    <meta name="author" content="BieYuu" />
+    <meta name="renderer" content="webkit">
+    <meta name="description" content="WeiLi's Blog" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="/css/default.css" type="text/css" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="alternate" type="application/atom+xml" title="Recent Entries" href="/atom.xml" />
+    <script src="/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+</head>
+<body>
+
+    <div class="home-menu">
+        <div class="home-icon-con">
+            <a class="home-menu-icon" href="/">WeiLi</a>
+            <a class="home-follow" href="#" title="Contact Me">+</a>
+        </div>
+        <div class="home-contact">
+            <a href="http://weibo.com/silviaazaaza/" target="_blank" style="margin-left:-5px;"><img src="http://www.weibo.com/favicon.ico" alt="" width="25"/></a>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="/js/prettify/prettify.css" />
+<style type="text/css">
+    body { background:#e8e8e8; }
+    @media screen and (max-width: 750px){
+        body { background:#fff; }
+    }
+    @media screen and (max-width: 1020px){
+        body { background:#fff; }
+    }
+</style>
+
+<div id="content">
+    <div class="entry">
+        <h1 class="entry-title"><a href="/petuum" title="十分钟了解分布式计算:Petuum">十分钟了解分布式计算:Petuum</a></h1>
+        <p class="entry-date">2014-06-13</p>
+        <p><a href="https://github.com/sailinglab/petuum">Petuum</a>是一个机器学习专用分布式计算框架，是CMU的Eric Xing教授带头的开源项目。本文介绍其架构，并基于文章 More Effective Distributed ML via a Stale Synchronous Parallel Parameter Server，NIPS 2013 重点探讨其核心内容SSP协议。</p>
+
+<h5>主要思想</h5>
+
+<p>Parameter server提供了一个易于读写Global模型参数的接口，而SSP协议允许distributed workers读写本地缓存中stale版本的参数（而不是每次都花大量时间时间等待central storage传回最新参数）。更进一步，通过限制参数的stale程度，SSP模型提供了机器学习算法的正确性保证。
+<img src="http://images.cnitblog.com/blog/331825/201406/131853410775804.png" alt="" /></p>
+
+<h5>Stale Synchronous Parallel (SSP)</h5>
+
+<ol>
+<li>并行机器学习面临着两个挑战：集群本身的Unequal performance machines和网络通信上的Low bandwidth, High delay问题。集群越大，线性扩展的代价就越大，网络通信会占据时间开销的主要部分。<img src="http://images.cnitblog.com/blog/331825/201406/131850312174475.png" alt="" /></li>
+<li>BSP和Asynchronous协议各有缺点<img src="http://images.cnitblog.com/blog/331825/201406/131858180452356.png" alt="" /><img src="http://images.cnitblog.com/blog/331825/201406/131859099675660.png" alt="" /></li>
+<li>SSP协议的好处在于，faster worker会遇到参数版本过于stale的问题，导致每一步迭代都需要网络通信，从而达到了平衡计算和网络通信时间开销的效果。<img src="http://images.cnitblog.com/blog/331825/201406/131850529839757.png" alt="" /></li>
+<li>Petuum提供了分布式共享global模型参数的接口，使得很容易可以将多线程版本算法修改为Petuum版本。<img src="http://images.cnitblog.com/blog/331825/201406/131856129831662.png" alt="" /></li>
+<li>SSP放宽一致性约束后，在恰当的参数下能算的更快。<img src="http://images.cnitblog.com/blog/331825/201406/131852388587778.png" alt="" />但其中有个迭代次数和每次迭代耗时的trade off<img src="http://images.cnitblog.com/blog/331825/201406/131852069998245.png" alt="" /></li>
+<li>Asynchronous的问题在于，整体对参数的更新量delta_w=delta_w1+delta_w2+...(delta_wi表示单个worker i根据部分数据计算的参数更新量），delta_wi之间应该是不能跨迭代次数的(而SSP则是放宽了这种约束)，因此Asynchronous并没有收敛的保证。假如我们可以通过概率假设，证明有一个概率版本的收敛速率，如果有一个bound，提出reduce bound的方法，会很有意义。<img src="http://images.cnitblog.com/blog/331825/201406/131851474673847.png" alt="" /></li>
+<li>对于非凸问题来说，BSP和SSP有可能收敛到的最优解不一样。对于非凸优化问题（比如说神经网络），有大量局部最优解，随机梯度下降（可以跳出局部最优解）比批量梯度下降效果要更好。LDA本身也是非凸优化问题，不过如果采用变分法就会目标函数变成凸优化。</li>
+</ol>
+
+
+<h5>Structure-aware dynamic scheduler (STRADS)</h5>
+
+<p><img src="http://images.cnitblog.com/blog/331825/201406/131854075144728.png" alt="" />
+1. STRADS负责模型的并行，涉及到参数的partition。
+2. LDA（主题参数，归属主题（混合概率），隐变量）和DL模型（分层参数）的参数具有天然的分块，可能会好做一些。</p>
+
+<h5>Fault tolerance</h5>
+
+<ol>
+<li>Petuum的Fault tolerance功能非常简单，通过在Parameter Sever上taking snapshots，将参数备份到持久化存储，而结点的故障恢复是没有支持的。</li>
+</ol>
+
+
+<h4>杂谈</h4>
+
+<p>前两天去ICML看到了Eric Xing真人，他说之所以Petuum用C++而不是Scala等在Github上活跃的语言实现是因为这只是一个原型，GraphX的图并行太局限了无法处理真正的海量数据，且GraphX的点一致性模式没有收敛保证而Petuum的SSP是理论保证的。虽说文人相轻，但GraphX的model partition是否会遇到瓶颈，在海量数据中Petuum的正确性和效率是否会击败GraphX，还得让实际应用说话了。</p>
+
+<h3>Resource</h3>
+
+<p><a href="http://yinxusen.github.io/blog/2014/01/17/petuum-source-code-read-and-initial-test-result/">Petuum: Source Code Read and Initial Test Result</a></p>
+
+<p><a href="http://yinxusen.github.io/blog/2014/01/18/how-to-use-spark-for-ml-algorithms-and-why/">How to Use Spark for ML Algorithms and Why ?</a></p>
+
+<h3>Publications</h3>
+
+<p>[1] <a href="http://www.cs.cmu.edu/~epxing/papers/2013/SSPTable_NIPS2013.pdf">More Effective Distributed ML via a Stale Synchronous Parallel Parameter Server</a> Qirong Ho, James Cipar, Henggang Cui, Jin Kyu Kim, Seunghak Lee, Phillip. B. Gibbons, Garth A. Gibson, Greg R. Ganger, Eric P. Xing.
+Neural Information Processing Systems, 2013 (NIPS 2013)
+<a href="http://www.cs.cmu.edu/~qho/ssp_nips2013.pdf">Slides</a></p>
+
+<p><a href="http://petuum.org/research.html">More</a></p>
+
+       
+    </div>
+
+    <div class="sidenav">
+        <iframe width="100%" height="75" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=75&fansRow=2&ptype=1&speed=0&skin=5&isTitle=0&noborder=0&isWeibo=0&isFans=0&uid=1665709880&verifier=cb2e2bea&dpc=1"></iframe>
+    </div>
+
+    <div class="sidenav">
+        <h2>Tech</h2>
+        <ul class="artical-list">
+        
+            <li><a href="/spark%20copy">十分钟了解分布式计算:GraphLab</a></li>
+        
+            <li><a href="/spark">十分钟了解分布式计算:Spark</a></li>
+        
+            <li><a href="/petuum">十分钟了解分布式计算:Petuum</a></li>
+        
+            <li><a href="/graphlab">十分钟了解分布式计算:GraphLab</a></li>
+        
+            <li><a href="/word2vec">文本深度表示模型Word2Vec</a></li>
+        
+        </ul>
+
+        <h2>Life</h2>
+        <ul class="artical-list">
+        
+        </ul>
+
+        <h2>About</h2>
+        <ul class="artical-list">
+        
+        </ul>
+    </div>
+</div>
+
+<script src="/js/post.js" type="text/javascript"></script>
+
+<!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="请将此处替换成文章在你的站点中的ID" data-title="请替换成文章的标题" data-url="请替换成文章的网址"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wli12"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- 多说公共JS代码 end -->
+
+
+    <!--*********************************************************-->
+    <!--****** 宝贝儿，看见这个时候，删掉下面的统计代码哦~ ******-->
+    <!--************* 再推荐下我的第一篇博客哦~~ ****************-->
+    <!--*********************************************************-->
+
+    <script type="text/javascript">
+        $(function(){
+            $('.home-follow').click(function(e){
+                e.preventDefault();
+
+                if($('.home-contact').is(':visible')){
+                    $('.home-contact').slideUp(100);
+                }else{
+                    $('.home-contact').slideDown(100);
+                }
+            });
+        })
+    </script>
+</body>
+</html>

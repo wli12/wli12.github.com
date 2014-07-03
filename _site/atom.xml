@@ -4,13 +4,319 @@
    <title>WeiLi</title>
    <link href="http://wli12.github.io//atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://wli12.github.io/" rel="alternate" type="text/html" />
-   <updated>2014-07-03T02:56:18+08:00</updated>
+   <updated>2014-07-03T10:14:14+08:00</updated>
    <id>http://wli12.github.io/</id>
    <author>
      <name></name>
      <email></email>
    </author>
 
+   
+   <entry>
+     <title>十分钟了解分布式计算:GraphLab</title>
+     <link href="http://wli12.github.io/spark%20copy"/>
+     <updated>2014-06-13T00:00:00+08:00</updated>
+     <id>http://wli12.github.io/spark copy</id>
+     <content type="html">&lt;h4&gt;GraphLab原型论文&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://graphlab.org/projects/index.html&quot;&gt;GraphLab&lt;/a&gt;是CMU在2009年开始的一个项目，这里的内容是基于论文&lt;/p&gt;
+
+&lt;p&gt;Low, Yucheng, et al. &quot;&lt;a href=&quot;https://www.select.cs.cmu.edu/publications/paperdir/vldb2012-low-gonzalez-kyrola-bickson-guestrin-hellerstein.pdf&quot;&gt;Distributed GraphLab: A Framework for Machine Learning in the Cloud&lt;/a&gt;&quot; Proceedings of the VLDB Endowment 5.8 (2012)[&lt;a href=&quot;http://www.cs.cmu.edu/~ylow/vldb5.pptx&quot;&gt;ppt&lt;/a&gt;]&lt;/p&gt;
+
+&lt;p&gt;后续会加入GraphLab PowerGraph (v. 2.2)的内容&lt;/p&gt;
+
+&lt;h5&gt;Graph计算的背景&lt;/h5&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131821276391915.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Graph可以刻画的范围是很广的，用户和商品之间的关系是一个典型的二部图，pagerank的random walk也是一张图&lt;/li&gt;
+&lt;li&gt;Graph database(Neo4j，Titan，flockdb)是用于图数据的存储检索，而涉及到复杂的Graph Processing，就适合用graphlab做。&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;h5&gt;Graph计算的特点&lt;/h5&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131820593896278.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Dependency Graph&lt;/strong&gt;：MapReduce对于大的data并行任务（Feature Extraction/Cross Validation）是适用的，但data并行系统很难刻画data之间的依赖关系，而这一点在机器学习（Gibbs Sampling，变分法，PageRank，CoEM，Collaborative Filtering等）中非常重要。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Local Updates&lt;/strong&gt;：在Graph并行系统中，一个结点的值只受相邻结点的影响，因此可以根据局部值就可以做更新。而在data并行系统中是没有Local Updates的概念的，local信息可以加快计算，不同local之间可以做并行。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Iterative Computation&lt;/strong&gt;：和普通Map-reduce任务不同，图计算天然涉及到迭代计算。更新结点a的时候，对其所有邻居(包括邻居结点b)map，再reduce所有邻居的结果，用得到的值来update结点a的值。然后就可以用结点a的最新值去更新他的结点b了。&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;h5&gt;GraphLab框架&lt;/h5&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131819389052666.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Graph Based Data Representation&lt;/strong&gt;：GraphLab将图切成若干子图分布式存储，其中ghost vertex是子图之间的边界点，其上存储了邻接结构以及remote数据的副本，子图之间也是有通信的，因此disk数据共享做备份很困难。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Update Functions&lt;/strong&gt;：采用的是Asynchronously Dynamic Update，这种动态计算的主要思想是根据vertex的priority更新，每台机器上都有一个优先队列，每次迭代中如果当前vertex变化量不大的话就不再将该点的scope（一步可达的点）入队了，ghost顶点不需要入队。改进空间：可以用排队论优化。&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131822446557184.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data consistency&lt;/strong&gt;：需要保证Race-Free Code，如果计算overlap发生抢跑，就会产生一致性问题。GraphLab在data consistency这方面是最灵活的框架。Edge consistency的思想是one vertex apart的Update Functions才可以并行，而Overlapping regions是只读的。&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131826000305796.png&quot; alt=&quot;&quot; /&gt;此外还可以定制Full consistency(Stronger)和Vertex consistency(Weaker)这两种一致性级别。&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131828007957736.png&quot; alt=&quot;&quot; /&gt;Distributed Consistency问题有两种解决办法 1)图着色(算法复杂，并且可能有些颜色的patirion比较小影响效率) 2)Distributed Locking with pipelining(高效，Latency Hiding)&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131832037495912.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fault tolerance&lt;/strong&gt;：GraphLab在这方面做的还不是很好，主要是Chandy-Lamport的asynchronous snapshotting algorithm。&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131833057177480.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+</content>
+   </entry>
+   
+   <entry>
+     <title>十分钟了解分布式计算:Spark</title>
+     <link href="http://wli12.github.io/spark"/>
+     <updated>2014-06-13T00:00:00+08:00</updated>
+     <id>http://wli12.github.io/spark</id>
+     <content type="html">&lt;h4&gt;Spark原型论文&lt;/h4&gt;
+
+&lt;p&gt;Zaharia, Matei, et al. &quot;&lt;a href=&quot;https://www.usenix.org/conference/nsdi12/technical-sessions/presentation/zaharia&quot;&gt;Resilient Distributed Datasets: A Fault-Tolerant Abstraction for In-Memory Cluster Computing&lt;/a&gt;&quot; Proceedings of the 9th USENIX conference on Networked Systems Design and Implementation. USENIX Association, 2012.
+[&lt;a href=&quot;https://www.usenix.org/system/files/conference/nsdi12/nsdi12-final138.pdf&quot;&gt;PDF&lt;/a&gt;] [&lt;a href=&quot;https://www.usenix.org/sites/default/files/conference/protected-files/nsdi_zaharia.pdf&quot;&gt;PPT&lt;/a&gt;][&lt;a href=&quot;http://blog.sciencenet.cn/home.php?mod=space&amp;amp;uid=425672&amp;amp;do=blog&amp;amp;id=520947&quot;&gt;中文翻译&lt;/a&gt;]&lt;/p&gt;
+
+&lt;p&gt;论文提出了&lt;strong&gt;弹性分布式数据集（RDD，Resilient Distributed Datasets）&lt;/strong&gt;，这是一种分布式的内存抽象，允许在大型集群上执行基于内存的计算（In-Memory Computing），与此同时还保持了MapReduce等数据流模型的容错特性。&lt;/p&gt;
+
+&lt;p&gt;现有的数据流系统对两种应用的处理并不高效：一是&lt;strong&gt;迭代式算法&lt;/strong&gt;，这在图应用和机器学习领域很常见；二是&lt;strong&gt;交互式数据挖掘工具&lt;/strong&gt;。这两种情况下，将数据保存在内存中能够极大地提高性能。为了有效地实现&lt;strong&gt;容错&lt;/strong&gt;，RDD提供了一种高度受限的共享内存，即RDD是&lt;strong&gt;只读&lt;/strong&gt;的，并且&lt;strong&gt;只能通过其他RDD上的批量操作来创建&lt;/strong&gt;。尽管如此，RDD仍然足以表示很多类型的计算，包括MapReduce和专用的迭代编程模型（如Pregel）等。论文中实现的RDD在迭代计算方面比Hadoop快二十多倍，同时还可以在5-7秒的延时内交互式地查询1TB的数据集。&lt;/p&gt;
+
+&lt;p&gt;第一作者&lt;a href=&quot;http://people.csail.mit.edu/matei/&quot;&gt;Matei Zaharia&lt;/a&gt;是&lt;a href=&quot;http://amplab.cs.berkeley.edu/&quot;&gt;UC Berkeley AMP Lab&lt;/a&gt;的PHD，MIT讲师，Spark母公司Databricks的创始人。
+&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131913142027574.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4&gt;背景&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;迭代式算法的特点在于，它是给定问题y=f(x)，已知x和y，想要得到的是f的参数。所以需要从一个参数的initial值开始，扫描很多遍数据，比如说迭代100次，去逼近参数（类似数值分析中牛顿迭代法解方程的做法）。&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131913410923427.jpg&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;Hadoop对迭代式问题没有很好的解决，Disk－IO花费时间太多。Spark针对复杂分布式计算任务中，HDFS的反复读写特别耗时的问题，给常用数据一种共享的状态（内存的读写是TB级别的），特别适合交互式数据分析任务（对时间忍受很差），以及复杂的图算法(pagerank)&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131914056551722.jpg&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;h4&gt;内存上的有效容错&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;RDD是一种抽象数据集，中间数据不用的时候不需要具象化，对RDD使用persist()/cached()函数可以使其持久化。&lt;/li&gt;
+&lt;li&gt;主流的容错方法有两种 1)logging（记录细粒度update）2)快照（缺点就是代价太大）。&lt;/li&gt;
+&lt;li&gt;Hadoop采用数据持久化的方式进行容错，HDFS每次读写都要做replica，代价是很大的。&lt;/li&gt;
+&lt;li&gt;对于Spark，内存是易失的，某个机器down掉了，内存中的RDD就没了。因此我们需要知道如果一个点failed，这个点的数据从哪里来。其采用记录RDD的血统（lineage）这种方式来进行容错，可以根据lineage来重新计算缺少的部分。lineage有五点信息，包括数据在哪，操作，优先使用什么，hash策略等。&lt;/li&gt;
+&lt;li&gt;为了做容错，RDD这种数据结构有两种限制：1) immutable（只需记录lineage就可以恢复）2) 是一种paritioned collections of record，只能从coarse-grained deterministic transformations（相当于从A到B只有一种走法，不能是随机的）得到。&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131915180772497.jpg&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;h4&gt;和内存数据库的区别&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;数据库是细粒度的，每一条record的价值都很大，通常不需要统计群体的情况&lt;/li&gt;
+&lt;li&gt;spark是粗粒度的，是“apply same operation to many items”，一次操作中大批数据都要参与进来。对于大数据来说任意一条数据是没有意义的，群体特征才有意义。&lt;/li&gt;
+&lt;li&gt;检索任务（细粒度）涉及到剪枝，分析任务（粗粒度）涉及到全盘扫描或下采样。&lt;/li&gt;
+&lt;li&gt;RAMCloud适合transaction事务级别（内存数据库Redis），而Spark适合做batch批处理&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;h4&gt;Spark实例：PageRank&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Spark可以方便地做Join操作（link和rank两张表)，而join的容错恢复是比较难的，不是narrow dependence，而是wide dependence&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131917011557505.jpg&quot; alt=&quot;&quot; /&gt;&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131918217491618.jpg&quot; alt=&quot;&quot; /&gt;&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131918336248822.jpg&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;Spark对用户提供了三种interface: 1) RDD 2)RDD的操作 3)RDD切分的控制。主要有两种不同类型的Flow: Data Flow(对数据进行改变，例如transformation and actions)和Control Flow(并不对数据进行改变，partitioning and persistence)&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131916241084890.jpg&quot; alt=&quot;&quot; /&gt;&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131919467804739.jpg&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+</content>
+   </entry>
+   
+   <entry>
+     <title>十分钟了解分布式计算:Petuum</title>
+     <link href="http://wli12.github.io/petuum"/>
+     <updated>2014-06-13T00:00:00+08:00</updated>
+     <id>http://wli12.github.io/petuum</id>
+     <content type="html">&lt;p&gt;&lt;a href=&quot;https://github.com/sailinglab/petuum&quot;&gt;Petuum&lt;/a&gt;是一个机器学习专用分布式计算框架，是CMU的Eric Xing教授带头的开源项目。本文介绍其架构，并基于文章 More Effective Distributed ML via a Stale Synchronous Parallel Parameter Server，NIPS 2013 重点探讨其核心内容SSP协议。&lt;/p&gt;
+
+&lt;h5&gt;主要思想&lt;/h5&gt;
+
+&lt;p&gt;Parameter server提供了一个易于读写Global模型参数的接口，而SSP协议允许distributed workers读写本地缓存中stale版本的参数（而不是每次都花大量时间时间等待central storage传回最新参数）。更进一步，通过限制参数的stale程度，SSP模型提供了机器学习算法的正确性保证。
+&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131853410775804.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h5&gt;Stale Synchronous Parallel (SSP)&lt;/h5&gt;
+
+&lt;ol&gt;
+&lt;li&gt;并行机器学习面临着两个挑战：集群本身的Unequal performance machines和网络通信上的Low bandwidth, High delay问题。集群越大，线性扩展的代价就越大，网络通信会占据时间开销的主要部分。&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131850312174475.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;BSP和Asynchronous协议各有缺点&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131858180452356.png&quot; alt=&quot;&quot; /&gt;&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131859099675660.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;SSP协议的好处在于，faster worker会遇到参数版本过于stale的问题，导致每一步迭代都需要网络通信，从而达到了平衡计算和网络通信时间开销的效果。&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131850529839757.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;Petuum提供了分布式共享global模型参数的接口，使得很容易可以将多线程版本算法修改为Petuum版本。&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131856129831662.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;SSP放宽一致性约束后，在恰当的参数下能算的更快。&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131852388587778.png&quot; alt=&quot;&quot; /&gt;但其中有个迭代次数和每次迭代耗时的trade off&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131852069998245.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;Asynchronous的问题在于，整体对参数的更新量delta_w=delta_w1+delta_w2+...(delta_wi表示单个worker i根据部分数据计算的参数更新量），delta_wi之间应该是不能跨迭代次数的(而SSP则是放宽了这种约束)，因此Asynchronous并没有收敛的保证。假如我们可以通过概率假设，证明有一个概率版本的收敛速率，如果有一个bound，提出reduce bound的方法，会很有意义。&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131851474673847.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;对于非凸问题来说，BSP和SSP有可能收敛到的最优解不一样。对于非凸优化问题（比如说神经网络），有大量局部最优解，随机梯度下降（可以跳出局部最优解）比批量梯度下降效果要更好。LDA本身也是非凸优化问题，不过如果采用变分法就会目标函数变成凸优化。&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;h5&gt;Structure-aware dynamic scheduler (STRADS)&lt;/h5&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131854075144728.png&quot; alt=&quot;&quot; /&gt;
+1. STRADS负责模型的并行，涉及到参数的partition。
+2. LDA（主题参数，归属主题（混合概率），隐变量）和DL模型（分层参数）的参数具有天然的分块，可能会好做一些。&lt;/p&gt;
+
+&lt;h5&gt;Fault tolerance&lt;/h5&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Petuum的Fault tolerance功能非常简单，通过在Parameter Sever上taking snapshots，将参数备份到持久化存储，而结点的故障恢复是没有支持的。&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;h4&gt;杂谈&lt;/h4&gt;
+
+&lt;p&gt;前两天去ICML看到了Eric Xing真人，他说之所以Petuum用C++而不是Scala等在Github上活跃的语言实现是因为这只是一个原型，GraphX的图并行太局限了无法处理真正的海量数据，且GraphX的点一致性模式没有收敛保证而Petuum的SSP是理论保证的。虽说文人相轻，但GraphX的model partition是否会遇到瓶颈，在海量数据中Petuum的正确性和效率是否会击败GraphX，还得让实际应用说话了。&lt;/p&gt;
+
+&lt;h3&gt;Resource&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://yinxusen.github.io/blog/2014/01/17/petuum-source-code-read-and-initial-test-result/&quot;&gt;Petuum: Source Code Read and Initial Test Result&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://yinxusen.github.io/blog/2014/01/18/how-to-use-spark-for-ml-algorithms-and-why/&quot;&gt;How to Use Spark for ML Algorithms and Why ?&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3&gt;Publications&lt;/h3&gt;
+
+&lt;p&gt;[1] &lt;a href=&quot;http://www.cs.cmu.edu/~epxing/papers/2013/SSPTable_NIPS2013.pdf&quot;&gt;More Effective Distributed ML via a Stale Synchronous Parallel Parameter Server&lt;/a&gt; Qirong Ho, James Cipar, Henggang Cui, Jin Kyu Kim, Seunghak Lee, Phillip. B. Gibbons, Garth A. Gibson, Greg R. Ganger, Eric P. Xing.
+Neural Information Processing Systems, 2013 (NIPS 2013)
+&lt;a href=&quot;http://www.cs.cmu.edu/~qho/ssp_nips2013.pdf&quot;&gt;Slides&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://petuum.org/research.html&quot;&gt;More&lt;/a&gt;&lt;/p&gt;
+</content>
+   </entry>
+   
+   <entry>
+     <title>十分钟了解分布式计算:GraphLab</title>
+     <link href="http://wli12.github.io/graphlab"/>
+     <updated>2014-06-13T00:00:00+08:00</updated>
+     <id>http://wli12.github.io/graphlab</id>
+     <content type="html">&lt;h4&gt;GraphLab原型论文&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://graphlab.org/projects/index.html&quot;&gt;GraphLab&lt;/a&gt;是CMU在2009年开始的一个项目，这里的内容是基于论文&lt;/p&gt;
+
+&lt;p&gt;Low, Yucheng, et al. &quot;&lt;a href=&quot;https://www.select.cs.cmu.edu/publications/paperdir/vldb2012-low-gonzalez-kyrola-bickson-guestrin-hellerstein.pdf&quot;&gt;Distributed GraphLab: A Framework for Machine Learning in the Cloud&lt;/a&gt;&quot; Proceedings of the VLDB Endowment 5.8 (2012)[&lt;a href=&quot;http://www.cs.cmu.edu/~ylow/vldb5.pptx&quot;&gt;ppt&lt;/a&gt;]&lt;/p&gt;
+
+&lt;p&gt;后续会加入GraphLab PowerGraph (v. 2.2)的内容&lt;/p&gt;
+
+&lt;h5&gt;Graph计算的背景&lt;/h5&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131821276391915.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Graph可以刻画的范围是很广的，用户和商品之间的关系是一个典型的二部图，pagerank的random walk也是一张图&lt;/li&gt;
+&lt;li&gt;Graph database(Neo4j，Titan，flockdb)是用于图数据的存储检索，而涉及到复杂的Graph Processing，就适合用graphlab做。&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;h5&gt;Graph计算的特点&lt;/h5&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131820593896278.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Dependency Graph&lt;/strong&gt;：MapReduce对于大的data并行任务（Feature Extraction/Cross Validation）是适用的，但data并行系统很难刻画data之间的依赖关系，而这一点在机器学习（Gibbs Sampling，变分法，PageRank，CoEM，Collaborative Filtering等）中非常重要。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Local Updates&lt;/strong&gt;：在Graph并行系统中，一个结点的值只受相邻结点的影响，因此可以根据局部值就可以做更新。而在data并行系统中是没有Local Updates的概念的，local信息可以加快计算，不同local之间可以做并行。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Iterative Computation&lt;/strong&gt;：和普通Map-reduce任务不同，图计算天然涉及到迭代计算。更新结点a的时候，对其所有邻居(包括邻居结点b)map，再reduce所有邻居的结果，用得到的值来update结点a的值。然后就可以用结点a的最新值去更新他的结点b了。&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;h5&gt;GraphLab框架&lt;/h5&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131819389052666.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Graph Based Data Representation&lt;/strong&gt;：GraphLab将图切成若干子图分布式存储，其中ghost vertex是子图之间的边界点，其上存储了邻接结构以及remote数据的副本，子图之间也是有通信的，因此disk数据共享做备份很困难。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Update Functions&lt;/strong&gt;：采用的是Asynchronously Dynamic Update，这种动态计算的主要思想是根据vertex的priority更新，每台机器上都有一个优先队列，每次迭代中如果当前vertex变化量不大的话就不再将该点的scope（一步可达的点）入队了，ghost顶点不需要入队。改进空间：可以用排队论优化。&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131822446557184.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data consistency&lt;/strong&gt;：需要保证Race-Free Code，如果计算overlap发生抢跑，就会产生一致性问题。GraphLab在data consistency这方面是最灵活的框架。Edge consistency的思想是one vertex apart的Update Functions才可以并行，而Overlapping regions是只读的。&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131826000305796.png&quot; alt=&quot;&quot; /&gt;此外还可以定制Full consistency(Stronger)和Vertex consistency(Weaker)这两种一致性级别。&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131828007957736.png&quot; alt=&quot;&quot; /&gt;Distributed Consistency问题有两种解决办法 1)图着色(算法复杂，并且可能有些颜色的patirion比较小影响效率) 2)Distributed Locking with pipelining(高效，Latency Hiding)&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131832037495912.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fault tolerance&lt;/strong&gt;：GraphLab在这方面做的还不是很好，主要是Chandy-Lamport的asynchronous snapshotting algorithm。&lt;img src=&quot;http://images.cnitblog.com/blog/331825/201406/131833057177480.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+</content>
+   </entry>
+   
+   <entry>
+     <title>文本深度表示模型Word2Vec</title>
+     <link href="http://wli12.github.io/word2vec"/>
+     <updated>2014-05-16T00:00:00+08:00</updated>
+     <id>http://wli12.github.io/word2vec</id>
+     <content type="html">&lt;h3&gt;简介&lt;/h3&gt;
+
+&lt;p&gt;Word2vec 是 Google 在 2013 年年中开源的一款将词表征为实数值向量的高效工具, 其利用深度学习的思想，可以通过训练，把对文本内容的处理简化为 K 维向量空间中的向量运算，而向量空间上的相似度可以用来表示文本语义上的相似度。Word2vec输出的词向量可以被用来做很多 NLP 相关的工作，比如聚类、找同义词、词性分析等等。如果换个思路， &lt;strong&gt;把词当做特征，那么Word2vec就可以把特征映射到 K 维向量空间，可以为文本数据寻求更加深层次的特征表示&lt;/strong&gt; 。&lt;/p&gt;
+
+&lt;p&gt;Word2vec 使用的是 Distributed representation 的词向量表示方式。Distributed representation  最早由 Hinton在 1986  年提出[4]。其基本思想是 &lt;strong&gt;通过训练将每个词映射成 K 维实数向量&lt;/strong&gt;（K 一般为模型中的超参数），通过词之间的距离（比如 cosine 相似度、欧氏距离等）来判断它们之间的语义相似度.其采用一个 &lt;strong&gt;三层的神经网络&lt;/strong&gt; ，输入层-隐层-输出层。有个核心的技术是 &lt;strong&gt;根据词频用Huffman编码&lt;/strong&gt; ，使得所有词频相似的词隐藏层激活的内容基本一致，出现频率越高的词语，他们激活的隐藏层数目越少，这样有效的降低了计算的复杂度。而Word2vec大受欢迎的一个原因正是其高效性，Mikolov 在论文[2]中指出，一个优化的单机版本一天可训练上千亿词。&lt;/p&gt;
+
+&lt;p&gt;这个三层神经网络本身是 &lt;strong&gt;对语言模型进行建模&lt;/strong&gt; ，但也同时 &lt;strong&gt;获得一种单词在向量空间上的表示&lt;/strong&gt; ，而这个副作用才是Word2vec的真正目标。&lt;/p&gt;
+
+&lt;p&gt;与潜在语义分析（Latent Semantic Index, LSI）、潜在狄立克雷分配（Latent Dirichlet Allocation，LDA）的经典过程相比，Word2vec利用了词的上下文，语义信息更加地丰富。&lt;/p&gt;
+
+&lt;h3&gt;样例实验&lt;/h3&gt;
+
+&lt;p&gt;在服务器上部署有Word2Vec系统,可以试试玩一玩&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd /home/liwei/word2vec/trunk
+
+./demo-analogy.sh # Interesting properties of the word vectors (try apple red mango / Paris France Italy)
+
+./demo-phrases.sh # vector representation of larger pieces of text using the word2phrase tool
+
+./demo-phrase-accuracy.sh # measure quality of the word vectors
+
+./demo-classes.sh # Word clustering
+
+./distance GoogleNews-vectors-negative300.bin # Pre-trained word and phrase vectors
+
+./distance freebase-vectors-skipgram1000-en.bin # Pre-trained entity vectors with Freebase naming
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;详细使用方法见 &lt;a href=&quot;https://code.google.com/p/word2vec&quot;&gt;官网&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3&gt;模型分析&lt;/h3&gt;
+
+&lt;p&gt;传统的统计语言模型是表示语言基本单位（一般为句子）的概率分布函数，这个概率分布也就是该语言的生成模型。一般语言模型可以使用各个词语条件概率的形式表示：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;p(s)=p(w_1^T )=p(w_1,w_2,…,w_T )=∏_t p(w_t |context)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Word2vec采用的是&lt;strong&gt;层次化Log-Bilinear语言模型&lt;/strong&gt;，其中一种是CBOW(Continuous Bag-of-Words Model)模型，由上下文预测下一个词为w_t的公式为：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;p(w_t |context)=p(w_t |w_(t-k),w_(t-k+1),…,w_(t-1),w_(t+1),…,w_(t+k-1),w_(t+k))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;CBOW的计算可以用 &lt;strong&gt;层次Softmax算法&lt;/strong&gt; ，这种算法结合了Huffman编码，每个词 w 都可以从树的根结点root沿着唯一一条路径被访问到，其路径也就形成了其编码code。假设 n(w, j)为这条路径上的第 j 个结点，且 L(w)为这条路径的长度， j 从 1 开始编码，即 n(w, 1)=root，n(w, L(w)) = w。对于第 j 个结点，层次 Softmax 定义的Label 为 1 - code[j]。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://ir.dlut.edu.cn/Upload/2013/11-21/1/image004.jpg&quot; alt=&quot;cbow&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;取一个适当大小的窗口当做语境，输入层读入窗口内的词，将它们的向量（K维，初始随机）加和在一起，形成隐藏层K个节点。输出层是一个巨大的二叉树，叶节点代表语料里所有的词（语料含有V个独立的词，则二叉树有|V|个叶节点）。而这整颗二叉树构建的算法就是Huffman树。这样，对于叶节点的每一个词，就会有一个全局唯一的编码，形如&quot;010011&quot;，不妨记左子树为1，右子树为0。接下来，隐层的每一个节点都会跟二叉树的内节点有连边，于是对于二叉树的每一个内节点都会有K条连边，每条边上也会有权值。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://xiaoquanzi.net/wp-content/uploads/2014/02/word2vec_hs_network.jpg&quot; alt=&quot;word2vec层次softmax网络示意图&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;对于语料库中的某个词w_t，对应着二叉树的某个叶子节点，因此它必然有一个二进制编码，如&quot;010011&quot;。在训练阶段，当给定上下文，要预测后面的词w_t的时候，我们就从二叉树的根节点开始遍历，这里的目标就是预测这个词的二进制编号的每一位。即对于给定的上下文，我们的目标是使得预测词的二进制编码概率最大。形象地说，我们希望在根节点，词向量和与根节点相连经过logistic计算得到bit=1的概率尽量接近0，在第二层，希望其bit=1的概率尽量接近1，这么一直下去，我们把一路上计算得到的概率相乘，即得到目标词w_t在当前网络下的概率P(w_t)，那么对于当前这个sample的残差就是1-P(w_t)，于是就可以使用梯度下降法训练这个网络得到所有的参数值了。显而易见，按照目标词的二进制编码计算到最后的概率值就是归一化的。&lt;/p&gt;
+
+&lt;p&gt;Hierarchical Softmax用Huffman编码构造二叉树，其实借助了分类问题中，使用一连串二分类近似多分类的思想。例如我们是把所有的词都作为输出，那么“桔子”、“汽车”都是混在一起。给定w_t的上下文，先让模型判断w_t是不是名词，再判断是不是食物名，再判断是不是水果，再判断是不是“桔子”。&lt;/p&gt;
+
+&lt;p&gt;但是在训练过程中，模型会赋予这些抽象的中间结点一个合适的向量，这个向量代表了它对应的所有子结点。因为真正的单词公用了这些抽象结点的向量，所以Hierarchical Softmax方法和原始问题并不是等价的，但是这种近似并不会显著带来性能上的损失同时又使得模型的求解规模显著上升。&lt;/p&gt;
+
+&lt;p&gt;没有使用这种二叉树，而是直接从隐层直接计算每一个输出的概率——即传统的Softmax，就需要对|V|中的每一个词都算一遍，这个过程时间复杂度是O(|V|)的。而使用了二叉树（如Word2vec中的Huffman树），其时间复杂度就降到了O(log2(|V|))，速度大大地加快了。&lt;/p&gt;
+
+&lt;h3&gt;参考&lt;/h3&gt;
+
+&lt;h4&gt;官方资料&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://code.google.com/p/word2vec/&quot;&gt;Word2Vec Homepage&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Tomas Mikolov, Kai Chen, Greg Corrado, and Jeffrey Dean. &lt;a href=&quot;http://arxiv.org/pdf/1301.3781.pdf&quot;&gt;Efficient Estimation of Word Representations in Vector Space. In Proceedings of Workshop at ICLR, 2013&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4&gt;理论资料&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://techblog.youdao.com/?p=915#LinkTarget_699&quot;&gt;Deep Learning实战之word2vec&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://licstar.net/archives/328&quot;&gt;Deep Learning in NLP （一）词向量和语言模型&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://xiaoquanzi.net/?p=156&quot;&gt;word2vec傻瓜剖析&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4&gt;实践资料&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/hebin/p/3507609.html&quot;&gt;利用中文数据跑Google开源项目word2vec&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/ansjsun/ansj_seg&quot;&gt;分词工具ANSJ&lt;/a&gt;(&lt;a href=&quot;http://blog.csdn.net/zhaoxinfan/article/details/10403917&quot;&gt;实例&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/shuishiman/article/details/20769437#1536434-tsina-1-26292-66a1f5d8f89e9ad52626f6f40fdeadaa&quot;&gt;Word2vec在事件挖掘中的调研&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;使用word2vec训练的模型，能够很好的语义表述query，不需要query之间一定有字面交集。如：“特警15秒钟内开枪击倒5暴徒”和“车站事件&quot;和”3.1昆明事件&quot;有很强的语义关联，这是 传统的 tf-idf方法是达不到的。&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;而在医疗项目中，如诊断报告和检查报告，短文本很常见，因此word2vec可能会达到很好的语义表征效果&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;如果能够结合口腔医院的语料，得到例如&lt;a href=&quot;http://cikuapi.com/index.php?content=%E7%89%99%E5%91%A8%E7%82%8E&quot;&gt;这样&lt;/a&gt;的词语相似度结果，甚至把传统的TF/IDF特征表示映射到新的向量空间中，将是很有意义的&lt;/p&gt;
+</content>
+   </entry>
    
  
 </feed>
