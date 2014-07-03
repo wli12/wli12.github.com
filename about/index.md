@@ -2,7 +2,7 @@
 layout: home
 ---
 
-<div class="index-content project">
+<div class="index-content about">
     <div class="section">
         <ul class="artical-cate">
             <li><a href="/"><span>Tech</span></a></li>
