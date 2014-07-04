@@ -87,12 +87,6 @@ int solution(const vector<int> &A) {
 
 ###代码
 ```
-// you can use includes, for example:
-// #include <algorithm>
-
-// you can write to stdout for debugging purposes, e.g.
-// cout << "this is a debug message" << endl;
-
 #include <math.h>
 int max(int a,int b,int c);
 int solution(vector<int> &A) {
