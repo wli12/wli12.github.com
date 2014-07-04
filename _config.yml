@@ -5,7 +5,7 @@ pygments: true
 paginate: 8
 permalink: /:title
 
-title: WeiLi
+title: Wei Li
 url: http://wli12.github.io/
 feed: /atom.xml
-author_info: <a href="http://wli12.github.io/">WeiLi</a>
+author_info: <a href="http://wli12.github.io/">Wei Li</a>
