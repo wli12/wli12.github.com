@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Best Time to Buy and Sell Stock 
+title: 【DP】Best Time to Buy and Sell Stock 
 description: Given a log of stock prices compute the maximum possible earning.
 category: tech
 tags: algotithm
