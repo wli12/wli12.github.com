@@ -3,7 +3,8 @@ layout: post
 title: 【DP】MaxSliceSum & MaxDoubleSliceSum
 description: Find a maximum sum of a compact subsequence of array elements and any double slice. 
 
-category: tech
+category: algorithm
+tag: codility
 ---
 
 ##MaxSliceSum

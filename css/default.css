@@ -86,10 +86,10 @@ pre ol{margin-left:25px;list-style-type:decimal;}
 .tech .aside{
     background-image:url('http://ww3.sinaimg.cn/mw690/6348b738gw1ehzgfbbdbhj20k00u4dtz.jpg');
 }
-.life .aside{
+.algorithm .aside{
     background-image:url('http://ww2.sinaimg.cn/large/6348b738gw1ee62zsoflsj208w0dcabg.jpg');
 }
-.about .aside{
+.life .aside{
     background-image:url('http://ww4.sinaimg.cn/mw690/6348b738gw1ehzfp2dhz7j21vq2d2npd.jpg')
 }
 .index-content .section { margin-left:30%; padding-top:80px; padding-right:15%; ;}
@@ -166,8 +166,8 @@ h3.about {color:#777;margin-top:20px;font-size:22px;margin-bottom:10px}
     .index-content .artical-cate { margin-top:50px; }
 
     .tech .aside,
-    .about .aside,
-    .life .aside {display:none;background-image:none;}
+    .life .aside,
+    .algorithm .aside {display:none;background-image:none;}
 }
 
 @media (max-width: 1020px){

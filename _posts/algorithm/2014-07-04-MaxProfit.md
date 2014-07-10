@@ -2,8 +2,8 @@
 layout: post
 title: 【DP】Best Time to Buy and Sell Stock 
 description: Given a log of stock prices compute the maximum possible earning.
-category: tech
-tags: algotithm
+category: algorithm
+tags: leetcode
 ---
 ###Best Time to Buy and Sell Stock
 >Say you have an array for which the ith element is the price of a given stock on day i.
