@@ -1,8 +1,17 @@
 ---
 layout: post
-title: 谈谈刚需和360影视
+title: 【Sorting】【Linked List】Merge k Sorted Lists
 category: algorithm
-description: 一个看起来很简单的需求，做起来真的有那么困难吗，到底是怎么回事？
+description: Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
 ---
+[Merge k Sorted Lists](https://oj.leetcode.com/problems/merge-k-sorted-lists/)
+>{{ page.description }}
 
-[WeiLi]:    http://wli12.github.io  "WeiLi"
+####思路
+
+####代码
+
+转载请注明出处：[{{ page.title }}]({{ page.url}})
+
+
+
