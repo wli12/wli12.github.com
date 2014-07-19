@@ -45,12 +45,12 @@ long long merge2part(vector<int>& nums, int start, int mid, int end){
     while(q <= end){
         tmp.push_back(nums[q++]);
     }
-    int i = start;
     /*
     for(int n : tmp){
         nums[i++] = n;
     }
      */
+    int i = start;
     for (vector<int>::iterator it = tmp.begin() ; it != tmp.end(); ++it){
         nums[i++] = *it;
     }
@@ -59,8 +59,8 @@ long long merge2part(vector<int>& nums, int start, int mid, int end){
 long long reversePair(vector<int>& nums, int start, int end){
     if(start >= end) return 0;
     int mid = (start + end) /2;
-    long long npair = 0;
-    npair += reversePair(nums, start, mid);
+    long long npair = 0; //根据提供的数据量，估算npair会超出int的范围
+    npair += reversePair(nums, start, mid); //mid应该归前半段（23|45）
     npair += reversePair(nums, mid+1, end);
     npair += merge2part(nums, start, mid, end);
     return npair;
@@ -69,17 +69,17 @@ int main() {
     int a, b;
     vector<int> nums;
     while(cin >> a){
-        nums.clear();
-    	while (a-- > 0 && cin >> b){
-        	nums.push_back(b);
-    	}
+        nums.clear();//别忘了清零
+        while (a-- > 0 && cin >> b){
+            nums.push_back(b);
+        }
         cout << reversePair(nums, 0, nums.size()-1) << endl;
     }
     return 0;
 }
 /**************************************************************
     Problem: 1348
-    User: in7deforever
+    User: Silviacc
     Language: C++
     Result: Accepted
     Time:240 ms
