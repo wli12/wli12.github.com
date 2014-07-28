@@ -4,7 +4,7 @@ title: 【DFS】【Matrix】Word Search
 category: algorithm
 description: Given a 2D board and a word, find if the word exists in the grid.
 ---
-[Word Search](https://oj.leetcode.com/problems/word-search/)
+##[Word Search](https://oj.leetcode.com/problems/word-search/)
 
 {{ page.description }}
 
@@ -27,12 +27,12 @@ word = "SEE", -> returns true,
 
 word = "ABCB", -> returns false.
 
-####思路
+###思路
 - 没有什么算法在里头，深搜+递归（回溯），15min写完
 - 如果是mXn的矩阵，长为l的字串，那么find那一步的最坏情况是一个高为l的满四叉树（其他分支都在最后一步fail），1+4+4^2+...+4^(l-1)=(4^l-1)/3
 ![](http://upload.wikimedia.org/math/6/1/6/61678cc844f354ce4114e6d4fd1e782b.png)不过平均情况应该会比这个好很多
 
-####代码
+###代码
 ```cpp
 bool exist(vector<vector<char> > &board, string word) {
     int lx = board.size();

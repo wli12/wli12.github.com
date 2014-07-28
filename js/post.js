@@ -68,7 +68,8 @@ $(document).ready(function(){
 
         function genTmpl(){
             var h1txt = $('h1').text();
-            var tmpl = '<ul><li class="h1"><a href="#">' + h1txt + '</a></li>';
+            //var tmpl = '<ul><li class="h1"><a href="#">' + h1txt + '</a></li>';
+            var tmpl = '<ul>';
 
             var heading = initHeading();
             var h2 = heading.h2;
@@ -119,7 +120,7 @@ $(document).ready(function(){
             };
         })();
 
-        if($('.entry h2').length > 2 && !isMobile.any() && !ie6){
+        if(!isMobile.any() && !ie6){
 
             genIndex();
 

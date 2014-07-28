@@ -5,15 +5,15 @@ description: Given a log of stock prices compute the maximum possible earning.
 category: algorithm
 tags: leetcode
 ---
-###Best Time to Buy and Sell Stock
+##Best Time to Buy and Sell Stock
 >Say you have an array for which the ith element is the price of a given stock on day i.
 
 >If **you were only permitted to complete at most one transaction** (ie, buy one and sell one share of the stock), design an algorithm to find the maximum profit.
 
-####思路
+###思路
 [Best Time to Buy and Sell Stock](https://oj.leetcode.com/problems/best-time-to-buy-and-sell-stock/)这题似乎就是codility中的[MaxProfit](https://codility.com/programmers/lessons/7),codility把这题归到Maximum slice problem一章，不过这题有更直观的解法
 
-####代码
+###代码
 
 ```cpp
 int solution(const vector<int> &A) {
@@ -28,14 +28,14 @@ int solution(const vector<int> &A) {
     return maxP;
 }
 ```
-###Best Time to Buy and Sell Stock II 
+##Best Time to Buy and Sell Stock II 
 >Say you have an array for which the ith element is the price of a given stock on day i.
 
 >Design an algorithm to find the maximum profit. **You may complete as many transactions as you like** (ie, buy one and sell one share of the stock multiple times). However, you may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
 
-####思路
+###思路
 II这道题反而比较像一个Maximum slice problem，有一个重要的观察是prices[i] - prices[i-2] = (prices[i] - prices[i-1]) + (prices[i-1] - prices[i-2])，因此我们可以抽象成相邻元素差序列的最大字段和问题。
-####代码
+###代码
 
 ```cpp
 int maxProfit(vector<int> &prices) {
@@ -50,7 +50,7 @@ int maxProfit(vector<int> &prices) {
 }
 ```
 
-###Best Time to Buy and Sell Stock III 
+##Best Time to Buy and Sell Stock III 
 >Say you have an array for which the ith element is the price of a given stock on day i.
 
 >Design an algorithm to find the maximum profit. **You may complete at most two transactions**.
@@ -58,9 +58,9 @@ int maxProfit(vector<int> &prices) {
 >Note:
 >You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
 
-####思路
+###思路
 这题很经典，跟MaxDoubleSliceSum的第二种思路有相似之处，枚举中间点，正反扫一遍
-####代码
+###代码
 ```cpp
 int maxProfit(vector<int> &prices) {
     int n = prices.size();

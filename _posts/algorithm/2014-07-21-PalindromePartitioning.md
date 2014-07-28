@@ -4,7 +4,7 @@ title: 【DP】【String】Palindrome Partitioning
 category: algorithm
 description: Given a string s, partition s such that every substring of the partition is a palindrome. 
 ---
-[Palindrome Partitioning](https://oj.leetcode.com/problems/palindrome-partitioning/)
+##[Palindrome Partitioning](https://oj.leetcode.com/problems/palindrome-partitioning/)
 
 {{ page.description }}
 
@@ -21,13 +21,13 @@ Return
 ]
 ```
 
-####思路
+###思路
 有两步DP：
 
 1. whether s[i,j] is palindrome 
 2. sub palindromes of s[i, n-1]
 
-####代码
+###代码
 ```cpp
 vector<vector<string> > partition(string s) {
     const int n = s.size();

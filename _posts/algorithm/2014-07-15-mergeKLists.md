@@ -4,12 +4,12 @@ title: 【Sorting】【Linked List】Merge k Sorted Lists
 category: algorithm
 description: Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
 ---
-[Merge k Sorted Lists](https://oj.leetcode.com/problems/merge-k-sorted-lists/)
+##[Merge k Sorted Lists](https://oj.leetcode.com/problems/merge-k-sorted-lists/)
 >{{ page.description }}
 
-####思路
+###思路
 用一个priority_queue（最小堆）维护k个链表中的最小值，然后剩下的事情就太简单了，出乎意料两次过。。。
-####代码
+###代码
 ```cpp
 class mycomp{
     public:
