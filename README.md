@@ -1,10 +1,6 @@
----
-layout: post
-title: 关于我
-description: 少见的乐天派程序媛，喜欢古典文学和科幻电影，爱音乐爱写作爱折腾，非典型90后，典型狮子座<(=⌒_⌒=)>
-category: life
----
-Welcome to [wli12.github.com]<http://wli12.github.io/>!
+少见的乐天派程序媛，喜欢古典文学和科幻电影，爱音乐爱写作爱折腾，非典型90后，典型狮子座<(=⌒_⌒=)>
+
+Welcome to [wli12.github.com](http://wli12.github.io/)!
 
 ##EDUCATION 
 __Tsinghua University__ 08.2012-07.2015
