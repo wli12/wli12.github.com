@@ -4,6 +4,7 @@ title: 漫谈随机数
 category: algorithm
 description: 说到生成任意范围内等概率随机数，如果止步于x = rand () % RANGE，恐怕有点不够意思
 ---
+生成任意范围内等概率随机数是个在平常不过的需求。
 ##简单做法
 C语言有个rand()函数，会返回一随机数值，范围在0至RAND_MAX间。于是很容易想到一个简单的做法
 
@@ -29,6 +30,7 @@ x = rand () % RANGE; /* Poor! return a random number in [0,RANGE) */
 ###方法2
 
 去除x=rand()所产生最大的(RAND_MAX+1)%RANGE个数，再(int)x/(int)((RANG_MAX+1.0)/RANGE)
+
 ```cpp
 int myrandom_range(int start,int end) {//[start,end)
     int N = end - start;
@@ -40,6 +42,7 @@ int myrandom_range(int start,int end) {//[start,end)
     return start + int(r / (RAND_MAX + 1.0) * N);
 }
 ```
+
 这种方法解决了问题1&2，但是这个做法在RAND_MAX%RANGE (< RANGE)比较大的时候，可能会很浪费时间（极端情况是接近1/2概率需要重试），一般情况下还是够用的。
 Let p = (RAND_MAX % RANGE) / (RAND_MAX + 1.0). This is the probability that any given call to rand() will require a retry. Note that this value is maximized when RANGE*2 = RAND_MAX+3, and which will yield a value of p roughly equal to 1/2.
 - The average number of times that rand() will be called is 1/(1-p) (with a worst case of about 2).
@@ -50,6 +53,7 @@ So for most values of p which will be much less than 1/32 say, performance shoul
 ###方法2++
 现在我们来考虑一个相对简单的问题，给你一个能生成1到5随机数的函数，用它写一个函数生成1到7的随机数。
 很简单,把rand的范围放大，在用方法2踢掉尾数，设有随机变量x=(rand5()-1)*5+rand5()，x的值可以一一对应到2位的5进制数，很显然00(1)-44(25)这25个数的概率都是均匀的(由于只有1个5进制bit就不考虑取高位bits这种优化了)。
+
 ```cpp
 int Rand7(){
 	int x;
@@ -62,11 +66,13 @@ int Rand7(){
 
 ###方法1++
 考虑RANGE能被RAND_MAX+1整除的情况，例如数据范围[0,2^32)，前面提到，RAND_MAX其值最小为(2^15-1),最大为(2^31-1),按最坏的情况算至少需要调用三次rand()，才能获得32位随机数，我们采取方法1中取高位的做法，三次rand()分别取低15位中的前10,11,11位。
+
 ```cpp
 inline unsigned __int32 rand32(){
     return ((rand()&0x00007FE0)>>5) + ((rand()&0x00007FF0)<<6) + ((rand()&0x00007FF0)<<17);
 }
 ``` 
+
 如果不能整除，就取一个刚好比RANGE大的可以整除的区间，然后再类似方法2++踢掉尾数。
 
 ###方法3

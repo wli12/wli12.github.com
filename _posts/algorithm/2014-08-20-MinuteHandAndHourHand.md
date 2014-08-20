@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 【Math】时针和分针每天重合多少次
+title: 时针和分针每天重合多少次
 category: algorithm
 description: 如果不假思索地脱口而出24次，你就被直觉骗了咯
 ---
