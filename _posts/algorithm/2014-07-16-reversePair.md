@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 【Sorting】【Array】数组中的逆序对
+title: 【Sorting】【Array】Reverse pairs
 category: algorithm
-description: 在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组，求出这个数组中的逆序对的总数。
+description: Numbers are said to be "reverse ordered" if N[i] > N[j] for i < j. How to get the number of pairs of reverse ordered items in O(nlogn) time.
 ---
 ##[数组中的逆序对](http://ac.jobdu.com/problem.php?pid=1348)
 >在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组，求出这个数组中的逆序对的总数。
