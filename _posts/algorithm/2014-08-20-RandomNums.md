@@ -4,7 +4,7 @@ title: 漫谈随机数
 category: algorithm
 description: 说到生成任意范围内等概率随机数，如果止步于x = rand () % RANGE，恐怕有点不够意思
 ---
-生成任意范围内等概率随机数是个在平常不过的需求。
+#生成任意范围内等概率随机数
 ##简单做法
 C语言有个rand()函数，会返回一随机数值，范围在0至RAND_MAX间。于是很容易想到一个简单的做法
 
@@ -79,6 +79,29 @@ inline unsigned __int32 rand32(){
 如果你懒得自己写，干脆用boost库，mt19937 produces integers in the range [0, 2^32-1].
 
 >最后，使用之前rand()，别忘了设随机种子srand((unsigned int)time(0))哦。
+
+##题外话
+序列上的随机算法，往往可以用线性扫描+替换之前元素的思想
+### 随机洗牌 (CC150v5-18.2)
+基本思想是打乱子序列[0, i-1]的顺序，再将a[i]随机地跟a[0]到a[i]任一个元素交换，那么a[i]最终在位置k上的概率是
+
+1/(i+1) * (i+1)/(i+2) * (i+2)/(i+3) *...* (N-2)/(N-1) * (N-1)/N = 1/N
+###长度为N(未知)的序列中随机取出k个元素 (编程珠玑12.3)
+基本思想是先选中前k个，从第k+1个元素开始， 以k/i (i=k+1, k+2,...,N) 的概率选中第i个元素，并且随机替换掉一个原先选中的元素，那么a[i]最终被选中的概率是
+
+(k/ (i+1)) * (1 - 1/(i+2)) * (1 - 1/(i+3)*...*(1 - 1/(N+1))) = k/(N+1)
+
+##参考
+
+[C++生成随机数——生成任意范围内的等概率随机数](http://hi.baidu.com/silyt/item/6f9c19d352a4644dfb576891)
+
+[Misconceptions about rand()](http://www.azillionmonkeys.com/qed/random.html)
+
+<http://tech-wonderland.net/blog/reservoir-sampling-learning-notes.html>
+
+<http://www.cnblogs.com/hellogiser/p/reservoir-sampling.html>
+
+<http://www.geeksforgeeks.org/reservoir-sampling>
 
 转载请注明出处：[{{ page.title }}]({{ page.url}})
 
